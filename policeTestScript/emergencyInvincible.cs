@@ -27,15 +27,10 @@ namespace emergencyInvincible
                         {
                             GameFiber.StartNew(delegate
                             {
-                                i.Repair();
                                 i.IsDeformationEnabled = false;
                                 i.CanBeDamaged = false;
                                 i.IsInvincible = true;
                             });
-                        }
-                        else
-                        {
-                            i.Repair();
                         }
                     }
                 }
