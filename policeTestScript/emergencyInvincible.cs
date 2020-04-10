@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Rage;
 
-[assembly: Rage.Attributes.Plugin("emergencyInvincible", Description = "Makes all vehicles that are labeled as 'Emergency' as invincible and repairs them if damaged.", Author = "MakerMacher")]
+[assembly: Rage.Attributes.Plugin("emergencyInvincible", Description = "Makes all vehicles that are labeled as 'Emergency' invincible.", Author = "MakerMacher")]
 
 namespace emergencyInvincible
 {
@@ -33,6 +33,24 @@ namespace emergencyInvincible
                             });
                         }
                     }
+                }
+            }
+        }
+
+        public static void OnUnload(bool isTerminating)
+        {
+            Vehicle[] veh = World.GetAllVehicles();
+
+            foreach (var i in veh)
+            {
+                if (i.Class.ToString() == "Emergency")
+                {
+                    GameFiber.StartNew(delegate
+                    {
+                        i.IsDeformationEnabled = true;
+                        i.CanBeDamaged = true;
+                        i.IsInvincible = false;
+                    });
                 }
             }
         }
